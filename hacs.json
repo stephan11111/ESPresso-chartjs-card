@@ -1,6 +1,6 @@
 {
-  "name": "Chart.js Card",
-  "description": "Allows to create highly customized graphs with support for templating",
+  "name": "ESPresso Chart.js Card",
+  "description": "Visualize your ESPresso flow",
   "render_readme": false,
-  "filename": "chartjs-card.js"
+  "filename": "espresso-chartjs-card.js"
 }

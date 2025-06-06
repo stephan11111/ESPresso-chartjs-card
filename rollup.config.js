@@ -28,9 +28,9 @@ const plugins = [
 export default {
   input: 'src/index.js',
   output: {
-    file: 'dist/chartjs-card.js',
+    file: 'dist/espresso-chartjs-card.js',
     format: 'umd',
-    name: 'Chartjs-card',
+    name: 'ESPresso-Chartjs-card',
   },
   plugins: [...plugins],
 }

@@ -1,7 +1,7 @@
 {
-  "name": "chartjs-card",
-  "version": "1.1.1",
-  "description": "Chart.js card to Home Assistant",
+  "name": "espresso-chartjs-card",
+  "version": "0.1.0",
+  "description": "ESPresso Chart.js card to Home Assistant",
   "main": "src/index.js",
   "keywords": [
     "chartjs",
@@ -29,6 +29,6 @@
     "rollup": "rollup -c",
     "start": "rollup -c --watch"
   },
-  "author": "Ricardo Reis",
+  "author": "stephan11111",
   "license": "ISC"
 }
