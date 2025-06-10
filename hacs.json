@@ -2,5 +2,5 @@
   "name": "ESPresso Chart.js Card",
   "description": "Visualize your ESPresso flow",
   "render_readme": false,
-  "filename": "espresso-chartjs-card.js"
+  "filename": "espresso-chartjs-card.min.js"
 }

@@ -1,6 +1,8 @@
 import commonjs from '@rollup/plugin-commonjs'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import json from '@rollup/plugin-json'
+import terser from '@rollup/plugin-terser';
+
 import serve from 'rollup-plugin-serve'
 
 const dev = process.env.ROLLUP_WATCH
@@ -27,10 +29,19 @@ const plugins = [
 
 export default {
   input: 'src/index.js',
-  output: {
-    file: 'dist/espresso-chartjs-card.js',
-    format: 'umd',
-    name: 'ESPresso-Chartjs-card',
-  },
+  output: [
+    {
+      file: 'dist/espresso-chartjs-card.js',
+      format: 'es',
+      name: 'espresso-chartjs-card',
+    },
+    {
+      file: 'dist/espresso-chartjs-card.min.js',
+      format: 'es',
+      sourcemap: true,
+      plugins: [terser()],
+    }
+  ],
+
   plugins: [...plugins],
 }

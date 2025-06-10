@@ -3,10 +3,10 @@
 [![](https://img.shields.io/github/v/release/ricreis394/chartjs-card.svg?style=flat)](https://github.com/ricreis394/chartjs-card/releases/latest)
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
 
-Chart.js card for Home Assistant
-Allows to create highly customized graphs with support for templating
+ESPresso Chart.js card for Home Assistant
+Used for a specific modification to make a smart espresso maker using EspHome
 
-## [Chart.js 3.7.0 documentation](https://www.chartjs.org/docs/3.7.0/)
+## [Chart.js 4.X documentation](https://www.chartjs.org/docs/)
 
 ![](./img/example1.png)
 
@@ -20,7 +20,8 @@ To do that just follow these steps: **HACS -> Frontend -> 3 dots (upper right co
 
 | Name           | Type    | Default | Description                                                        |
 | -------------- | ------- | ------- | ------------------------------------------------------------------ |
-| chart          | string  |         | chart type                                                         |
+| chart          | string  |  scater | Can't be changed                                                   |
+| update_interval| float   | 0       | pause between updating the interval. default update is on every shot timer change|
 | data           |         |         | just like chart.js documentation, accepts Templates for all fields |
 | options        |         |         | just like chart.js documentation                                   |
 | plugins        |         |         | just like chart.js documentation                                   |
@@ -28,39 +29,11 @@ To do that just follow these steps: **HACS -> Frontend -> 3 dots (upper right co
 | custom_options | object  |         | TODO                                                               |
 | register_plugins | array  |         | registers plugins to be added to graph                            |
 
-## Templating
 
-Everything between Curly braces and started with a Dollar sign, will be evaluated as Javascript code
-
-You can easily access states through:
-
-```js
-${states["sensor.example"].state}
-```
-
-or you can convert a Date to a week day label:
-
-```js
-${new Date(new Date().setDate(new Date().getDate()-2)).toLocaleString("pt-PT", {weekday: "short"})}
-```
-
-or more simple for today
-
-```js
-${new Date().toLocaleString("pt-PT", {weekday: "short"})}
-```
-
-and you can convert array string to a real array like so
-
-```js
-${'[12, 14, 2, 4]'}
-```
-
-can be useful when you grab a lot of data from the DB and want to display all in the graph
 
 ## Additional plugins
 
-Some plugins can be added to the graph
+Should be added (on the todo list)
 
 | Name | Link |
 |--|--|
@@ -82,154 +55,94 @@ register_plugins:
 ![](./img/example1.png)
 
 ```yaml
-chart: bar
+type: custom:espresso-chartjs-card
+entities:
+  last_graph: input_datetime.espresso_last_graph
+card_mod:
+  style: |
+    ha-card {
+      height: 100%;
+    }
 data:
   datasets:
-    - backgroundColor: ${states["sensor.chartjs_energy_last_30_days"].attributes.colors}
+    - label: Pressure
+      xAxisID: x-axis-1
+      yAxisID: y-pressure
+      backgroundColor: "#db330d"
+      borderColor: "#db330d"
+      data:
+        - x: 0
+          "y": 0
+      showLine: true
+      pointRadius: 0
+      fill: false
       borderWidth: 1
-      data: ${states["sensor.chartjs_energy_last_30_days"].attributes.data}
-      label: Eletricidade
-  labels: ${states["sensor.chartjs_energy_last_30_days"].attributes.labels}
-custom_options:
-  showLegend: false
+    - label: Pump
+      xAxisID: x-axis-1
+      yAxisID: y-pumpvalue
+      backgroundColor: "#9044db"
+      borderColor: "#9044db"
+      data:
+        - x: 0
+          "y": 0
+      showLine: true
+      pointRadius: 0
+      fill: false
+      borderWidth: 2
+    - label: Weight
+      xAxisID: x-axis-1
+      yAxisID: y-gramm
+      backgroundColor: "#36A2EB"
+      borderColor: "#36A2EB"
+      data:
+        - x: 0
+          "y": 0
+      showLine: true
+      pointRadius: 0
+      fill: true
 options:
+  maintainAspectRatio: false
   plugins:
     title:
-      display: true
-      text: Consumo energético (últimos 30 dias)
-entity_row: false
-type: custom:chartjs-card
-```
-
-### example 2
-
-![](./img/example2.png)
-
-```yaml
-type: custom:chartjs-card
-chart: bar
-custom_options:
-  showLegend: false
-data:
-  datasets:
-    - backgroundColor: '#2fabe0'
-      borderWidth: 1
-      data:
-        - 10
-        - 11
-        - 10
-        - 9
-        - 9.6
-        - 9
-        - 11
-      label: Lavar roupa
-    - backgroundColor: '#fcba03'
-      borderWidth: 1
-      data:
-        - 2
-        - 3
-        - 5
-        - 2
-        - 3
-        - 3
-        - 5
-      label: Frigorífico
-    - backgroundColor: '#c8ed11'
-      borderWidth: 1
-      data:
-        - 5
-        - 6
-        - 5
-        - 7
-        - 3
-        - 4
-        - 5
-      label: Placa
-  labels:
-    - >-
-      ${new Date(new Date().setDate(new
-      Date().getDate()-6)).toLocaleString("pt-PT", {weekday: "short"})}
-    - >-
-      ${new Date(new Date().setDate(new
-      Date().getDate()-5)).toLocaleString("pt-PT", {weekday: "short"})}
-    - >-
-      ${new Date(new Date().setDate(new
-      Date().getDate()-4)).toLocaleString("pt-PT", {weekday: "short"})}
-    - >-
-      ${new Date(new Date().setDate(new
-      Date().getDate()-3)).toLocaleString("pt-PT", {weekday: "short"})}
-    - >-
-      ${new Date(new Date().setDate(new
-      Date().getDate()-2)).toLocaleString("pt-PT", {weekday: "short"})}
-    - >-
-      ${new Date(new Date().setDate(new
-      Date().getDate()-1)).toLocaleString("pt-PT", {weekday: "short"})}
-    - '${new Date().toLocaleString("pt-PT", {weekday: "short"})}'
-entity_row: false
-options:
+      display: false
+      text: Shot Data
+  animation:
+    duration: 0
+  elements:
+    line:
+      tension: 0
   scales:
-    x:
-      scaleLabel:
-        display: true
-        fontStyle: initial
-        labelString: Dias
-    'y':
-      scaleLabel:
-        display: true
-        fontStyle: initial
-        labelString: Horas
-      ticks:
-        beginAtZero: true
-  plugins:
-    title:
+    x-axis-1:
+      position: bottom
+      min: 0
+      max: 15
+    y-gramm:
       display: true
-      text: |
-        Consumo por semana
-```
-
-### example 3
-
-![](./img/example3.png)
-
-```yaml
-chart: doughnut
-custom_options:
-  showLegend: true
-data:
-  datasets:
-    - backgroundColor:
-        - '#32a852'
-        - '#3271a8'
-        - '#9044db'
-        - '#dbbd44'
-        - '#6533ab'
-        - '#364534'
-        - '#db330d'
-      borderColor: var(--paper-card-background-color)
-      borderWidth: 1
-      data:
-        - ${states["sensor.energy_daily_placa"].state}
-        - ${states["sensor.energy_daily_fridge"].state}
-        - ${states["sensor.energy_daily_oven"].state}
-        - ${states["sensor.energy_daily_microwave"].state}
-        - ${states["sensor.energy_daily_dishwasher"].state}
-        - ${states["sensor.energy_daily_washing_machine"].state}
-        - ${states["sensor.energy_daily_drying_machine"].state}
-      hoverBorderColor: var(--paper-card-background-color)
-  labels:
-    - Placa
-    - Frigorifico
-    - Forno
-    - Micro-ondas
-    - Máq. lavar loiça
-    - Máq. lavar roupa
-    - Máq. secar roupa
-options:
-  plugins:
-    legend:
+      position: right
+      min: 0
+      suggestedMax: 50
+      grid:
+        drawOnChartArea: false
+    y-pressure:
+      display: true
       position: left
-    title:
-      display: true
-      text: Consumo energético (hoje)
-type: custom:chartjs-card
+      min: 0
+      max: 12
+      grid:
+        drawOnChartArea: true
+    y-pumpvalue:
+      display: false
+      position: left
+      min: 0
+      max: 100
+      grid:
+        drawOnChartArea: false
+
 ```
+
+## How to make the dist file
+
+Clone the rep to your local folder
+Install NPM and use NPM to install rollup
+Install dependencies: npm install @rollup/plugin-commonjs @rollup/plugin-json @rollup/plugin-node-resolve rollup-plugin-serve prettier install --save-dev
+run: npm run rollup
