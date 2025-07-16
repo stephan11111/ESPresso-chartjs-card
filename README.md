@@ -21,7 +21,7 @@ To do that just follow these steps: **HACS -> Frontend -> 3 dots (upper right co
 | Name           | Type    | Default | Description                                                        |
 | -------------- | ------- | ------- | ------------------------------------------------------------------ |
 | chart          | string  |  scater | Can't be changed                                                   |
-| update_interval| float   | 0       | pause between updating the interval. default update is on every shot timer change|
+| updateinterval| float   | 0       | Minimal pause between updating the interval. default update is on every shot timer change|
 | data           |         |         | just like chart.js documentation, accepts Templates for all fields |
 | options        |         |         | just like chart.js documentation                                   |
 | plugins        |         |         | just like chart.js documentation                                   |
@@ -144,5 +144,11 @@ options:
 
 Clone the rep to your local folder
 Install NPM and use NPM to install rollup
-Install dependencies: npm install @rollup/plugin-commonjs @rollup/plugin-json @rollup/plugin-node-resolve rollup-plugin-serve prettier install --save-dev
+
+Install dependencies: 
+
+```bash
+npm install @rollup/plugin-commonjs @rollup/plugin-json @rollup/plugin-node-resolve rollup-plugin-serve prettier install --save-dev
+
 run: npm run rollup
+```

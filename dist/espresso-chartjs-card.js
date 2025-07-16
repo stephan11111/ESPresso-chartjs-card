@@ -1,5 +1,5 @@
 const name = "espresso-chartjs-card";
-const version$1 = "1.0.0";
+const version$1 = "1.0.1";
 const dependencies = {
 	"chart.js": "^4.4.9"};
 var pkg = {

@@ -1,6 +1,6 @@
 {
   "name": "espresso-chartjs-card",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "ESPresso Chart.js card to Home Assistant",
   "main": "src/index.js",
